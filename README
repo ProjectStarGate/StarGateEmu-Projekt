@@ -1,0 +1,81 @@
+Rev: 5.2.4
+Grim Batol:		Boss:	Erudax
+			Boss:	Drahga
+			Boss:	Throngus
+			Boss:	General Umbriss
+			Boss:	Erudax
+			Mob:	Malveillant
+			Mob:	Habitant
+			Mob:	Valiona
+
+ThroneOfTheTides:	Boss:	Ozumat
+			Boss:	Erunak Stonespeaker
+			Boss:	Mindbender Ghursha
+			Boss:	Lady Nazjar
+			Boss:	Commander Ulthok
+
+Blackrock Caverns:	Boss:	Corla
+			Boss:	Romogg Bonecrusher
+			Boss:	Karsh
+			Boss:	Bella
+			Boss:	Lord Obsidius
+			Mob:	Shade Obsidius
+			Mob:	Chains Of Woe
+
+HallsOfOrigination:	Boss:	Ammunae
+			Boss:	Anhuur
+			Boss:	Anraphet
+			Boss:	Isiset
+			Boss:	Ptah
+			Boss:	Rajh
+			Boss:	Setesh
+
+################################################################
+
+Mount:			Abyssisches Seepferdchen	/Fix
+
+
+Magier:			Wasserelementar			/Fix
+
+
+
+Paladin:		Grund Mana			/Update
+			Weihe				/Fix
+
+
+
+Jäger:			Schlangengift			/Fix
+
+
+
+Krieger:		Siegesrausch			/Update
+			Siegreich			/Update
+			Zerschmettern			/Update
+			Unhöfliche Unterbrechung	/Update
+
+
+Hexenmeister:		Omen der Verdammnis		/Fix
+			Schattenbrand			/Fix
+			Blutsauger			/Fix
+
+
+
+Todesritter:		Unaufhaltsamer Tod		/Update
+
+
+Priester:		Lichtbrunnen			/Fix
+
+################################################################
+
+Plündermeister-System:	/Fix
+
+Bewegungs-System:	/Update
+
+Reaktionen-System:	/Update
+
+Fall-System:		/Update
+
+Instanzen-System:	/Update
+
+Velhicle-System:	/Fix
+
