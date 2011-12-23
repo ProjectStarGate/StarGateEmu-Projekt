@@ -100,7 +100,7 @@ void Totem::InitStats(uint32 duration)
     SetLevel(m_owner->getLevel());
 }
 
-void Totem::InitSummon()
+/*void Totem::InitSummon()
 {
     if (m_type == TOTEM_PASSIVE)
         CastSpell(this, GetSpell(), true);
@@ -108,7 +108,30 @@ void Totem::InitSummon()
     // Some totems can have both instant effect and passive spell
     if (GetSpell(1))
         CastSpell(this, GetSpell(1), true);
-}
+}*/
+
+void Totem::InitSummon()
+{
+    if (m_type == TOTEM_PASSIVE)
+    {
+        switch (GetSpell())
+        {
+            case 33663: // Earth Elemental Totem
+            case 32982: // Fire Elemental Totem
+            case 50461: // Anti-Magic Zone
+                CastSpell(this, GetSpell(), true);
+                break;
+            default:
+                AddAura(GetSpell(), this);
+                break;
+        }
+    }
+
+    // Some totems can have both instant effect and passive spell
+    if (GetSpell(1))
+        CastSpell(this, GetSpell(1), true);
+
+ }
 
 void Totem::UnSummon()
 {
