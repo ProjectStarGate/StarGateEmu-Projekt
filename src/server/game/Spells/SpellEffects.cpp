@@ -1996,7 +1996,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     // Damage is increased by 25% if your off-hand weapon is enchanted with Flame tongue.
 
                     if (m_caster->GetAuraEffect(SPELL_AURA_DUMMY, SPELLFAMILY_SHAMAN, 0x200000, 0, 0))
-                        AddPctN(m_damage, damage);
+                        m_damage += m_damage * damage / 100;
                 }
                 return;
             }
