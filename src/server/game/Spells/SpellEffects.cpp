@@ -1993,9 +1993,10 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
 
                 if (m_caster->ToPlayer()->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_OFFHAND))
                 {
-                    // Damage is increased by 25% if your off-hand weapon is enchanted with Flametongue.
+                    // Damage is increased by 25% if your off-hand weapon is enchanted with Flame tongue.
+
                     if (m_caster->GetAuraEffect(SPELL_AURA_DUMMY, SPELLFAMILY_SHAMAN, 0x200000, 0, 0))
-                        m_damage += m_damage * damage / 100;
+                        AddPctN(m_damage, damage);
                 }
                 return;
             }
