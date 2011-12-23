@@ -174,6 +174,12 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petentry, uint32 petnumber, bool c
             return false;
         }
     }
+	else if (pet_type == SUMMON_PET && summon_spell_id && !owner->HasSpell(summon_spell_id))
+    {
+    // pet (e.g.: Water Elemental) Mage
+        m_loading = false;
+        return false;
+    }
 
     uint32 pet_number = fields[0].GetUInt32();
 
