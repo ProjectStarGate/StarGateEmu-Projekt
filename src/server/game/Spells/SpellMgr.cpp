@@ -4573,6 +4573,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectApplyAuraName[1] = SPELL_AURA_MOD_POWER_REGEN;
             count++;
             break;
+		case 79587:    // Vision of the past fase 2
+            spellInfo->EffectMiscValue[2] |= 2;
+            count++;
+            break;
         default:
             break;
         }

@@ -7953,7 +7953,7 @@ bool Unit::HandleAuraProc(Unit * pVictim, uint32 damage, Aura * triggeredByAura,
         case SPELLFAMILY_GENERIC:
             switch (dummySpell->Id)
             {
-	            // Pursuit of Justice
+	            /*// Pursuit of Justice
                 case 26022:
                 case 26023:
                 {
@@ -7968,7 +7968,7 @@ bool Unit::HandleAuraProc(Unit * pVictim, uint32 damage, Aura * triggeredByAura,
                         return true;
                     }
                     break;
-                }
+                }*/
                 // Bone Shield cooldown
                 case 49222:
                 {

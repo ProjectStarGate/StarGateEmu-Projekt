@@ -865,7 +865,8 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
 
         SendPacket(&data);
         sLog->outStaticDebug("WORLD: Sent motd (SMSG_MOTD)");
-
+		chH.PSendSysMessage("|CFFF87217Die neuesten News findet Ihr auf unserer Homepage !");
+	    chH.PSendSysMessage("                |CFFFF0000 ---> ""|CFF00FF00 http://188.138.101.85"" |CFFFF0000 <---");
         if (sWorld->getIntConfig(CONFIG_ENABLE_SINFO_LOGIN) == 1)
         {
             uint32 PlayersNum = sWorld->GetPlayerCount();
