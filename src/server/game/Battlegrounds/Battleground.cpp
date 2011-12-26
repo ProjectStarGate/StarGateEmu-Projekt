@@ -746,6 +746,8 @@ void Battleground::EndBattleground(uint32 winner)
         if (!plr)
             continue;
 
+		plr->RewardGuildReputation(166.6); // Not sure but probably it is normal value..
+
         // should remove spirit of redemption
         if (plr->HasAuraType(SPELL_AURA_SPIRIT_OF_REDEMPTION))
             plr->RemoveAurasByType(SPELL_AURA_MOD_SHAPESHIFT);

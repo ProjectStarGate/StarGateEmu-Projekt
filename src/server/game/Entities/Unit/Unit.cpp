@@ -6324,7 +6324,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                 // Leader of the Pack
                 case 24932:
                 {
-                   if (triggerAmount <= 0)
+                   /*if (triggerAmount <= 0)
                         return false;
                     basepoints0 = int32(CountPctFromMaxHealth(triggerAmount));
                     target = this;
@@ -6334,7 +6334,16 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     int32 basepoints1 = triggerAmount * 2;
                     // Mana Part
                     CastCustomSpell(this, 68285, &basepoints1, 0, 0, true, 0, triggeredByAura);
-                    break;
+                    break;*/
+				   if (triggerAmount <= 0 || procEx != PROC_EX_CRITICAL_HIT)
+                   return false;
+                   basepoints0 = int32(CountPctFromMaxHealth(triggerAmount/2.5));
+                   CastCustomSpell(this, 34299, &basepoints0, 0, 0, true, 0, triggeredByAura);
+                   if (triggeredByAura->GetCasterGUID() != GetGUID())
+                   break;
+                   basepoints0 = basepoints0 = triggerAmount * GetMaxPower(POWER_MANA) / 100;
+                   // Mana Part
+                   CastCustomSpell(this, 68285, &basepoints0, 0, 0, true, 0, triggeredByAura);
                 }
                 // Healing Touch (Dreamwalker Raiment set)
                 case 28719:

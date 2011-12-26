@@ -663,6 +663,11 @@ int32 ArenaTeam::WonAgainst(uint32 againstRating)
     // Modify the team stats accordingly
     FinishGame(mod);
 
+	// Modify the guild reputations
+    for (MemberList::iterator itr = Members.begin(); itr != Members.end(); ++itr)
+    if (Player* member = ObjectAccessor::FindPlayer(itr->Guid))
+    member->RewardGuildReputation(62); // Normal Value
+
     // Update number of wins per season and week
     Stats.WeekWins += 1;
     Stats.SeasonWins += 1;
