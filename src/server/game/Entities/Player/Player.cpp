@@ -6120,7 +6120,7 @@ void Player::UpdateWeaponSkill (WeaponAttackType attType)
 
     uint32 weapon_skill_gain = sWorld->getIntConfig(CONFIG_SKILL_GAIN_WEAPON);
 
-    switch(attType)
+    /*switch(attType)
     {
         case BASE_ATTACK:
         {
@@ -6144,6 +6144,14 @@ void Player::UpdateWeaponSkill (WeaponAttackType attType)
             break;
     }
     UpdateAllCritPercentages();
+}*/
+
+	Item* tmpitem = GetWeaponForAttack(attType, true);
+  if (!tmpitem && attType == BASE_ATTACK)
+    UpdateSkill(SKILL_UNARMED, weapon_skill_gain);
+  else if (tmpitem && tmpitem->GetProto()->SubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE)
+    UpdateSkill(tmpitem->GetSkill(), weapon_skill_gain);  
+	 UpdateAllCritPercentages();
 }
 
 void Player::UpdateCombatSkills(Unit *pVictim, WeaponAttackType attType, bool defence)

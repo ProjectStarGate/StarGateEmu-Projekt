@@ -105,6 +105,30 @@ void GameObject::CleanupsBeforeDelete(bool /*finalCleanup*/)
     }
 }
 
+void GameObject::RemoveFromOwner()
+ {
+    uint64 ownerGUID = GetOwnerGUID();
+    if (!ownerGUID)
+        return;
+
+    if (Unit* owner = ObjectAccessor::GetUnit(*this, ownerGUID))
+    {
+        owner->RemoveGameObject(this, false);
+        ASSERT(!GetOwnerGUID());
+        return;
+    }
+
+    const char * ownerType = "creature";
+    if (IS_PLAYER_GUID(ownerGUID))
+        ownerType = "player";
+    else if (IS_PET_GUID(ownerGUID))
+        ownerType = "pet";
+
+    sLog->outCrash("Delete GameObject (GUID: %u Entry: %u SpellId %u LinkedGO %u) that lost references to owner (GUID %u Type '%s') GO list. Crash possible later.",
+        GetGUIDLow(), GetGOInfo()->id, m_spellId, GetGOInfo()->GetLinkedGameObjectEntry(), GUID_LOPART(ownerGUID), ownerType);
+    SetOwnerGUID(0);
+}
+
 void GameObject::AddToWorld()
 {
     ///- Register the gameobject for guid lookup
@@ -1233,12 +1257,18 @@ void GameObject::Use(Unit* user)
         //fishing bobber
         case GAMEOBJECT_TYPE_FISHINGNODE:                   //17
         {
-            if (user->GetTypeId() != TYPEID_PLAYER)
+            /*if (user->GetTypeId() != TYPEID_PLAYER)
                 return;
 
             Player* player = (Player*)user;
 
             if (player->GetGUID() != GetOwnerGUID())
+			*/
+			Player* player = user->ToPlayer();
+           if (!player)
+                return;
+            
+		   if (player->GetGUID() != GetOwnerGUID())
                 return;
 
             switch (getLootState())
@@ -1276,7 +1306,7 @@ void GameObject::Use(Unit* user)
                     if (chance >= roll)
                     {
                         player->UpdateFishingSkill();
-
+						RemoveFromOwner();
                         // prevent removing GO at spell cancel
                         player->RemoveGameObject(this, false);
                         SetOwnerGUID(player->GetGUID());

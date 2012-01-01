@@ -4945,6 +4945,10 @@ SpellCastResult Spell::CheckCast(bool strict)
                 return SPELL_FAILED_NOTHING_TO_STEAL;
         }
     }
+	if (m_caster->GetTypeId() == TYPEID_PLAYER)
+        if (Battleground* bg = m_caster->ToPlayer()->GetBattleground())
+            if (bg->GetStatus() == STATUS_WAIT_JOIN && (m_spellInfo->Id == 66 || m_spellInfo->Id == 1953))
+                return SPELL_FAILED_CANT_DO_THAT_RIGHT_NOW;
 
     // check death state
     if (!m_IsTriggeredSpell && !m_caster->isAlive() && !(m_spellInfo->Attributes & SPELL_ATTR0_PASSIVE) && !(m_spellInfo->Attributes & SPELL_ATTR0_CASTABLE_WHILE_DEAD))

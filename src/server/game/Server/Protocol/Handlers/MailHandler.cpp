@@ -290,14 +290,14 @@ void WorldSession::HandleMailMarkAsRead(WorldPacket & recv_data)
     if (!GetPlayer()->GetGameObjectIfCanInteractWith(mailbox, GAMEOBJECT_TYPE_MAILBOX))
         return;
 
-    Player *pl = _player;
-    Mail *m = pl->GetMail(mailId);
-    if (m)
+    Player* player = _player;
+    Mail* m = player->GetMail(mailId);
+		if (m)
     {
-        if (pl->unReadMails)
-            --pl->unReadMails;
+        if (player->unReadMails)
+            --player->unReadMails;
         m->checked = m->checked | MAIL_CHECK_MASK_READ;
-        pl->m_mailsUpdated = true;
+        player->m_mailsUpdated = true;
         m->state = MAIL_STATE_CHANGED;
     }
 }
@@ -494,26 +494,27 @@ void WorldSession::HandleMailTakeMoney(WorldPacket & recv_data)
     if (!GetPlayer()->GetGameObjectIfCanInteractWith(mailbox, GAMEOBJECT_TYPE_MAILBOX))
         return;
 
-    Player *pl = _player;
+    Player* player = _player;
 
-    Mail* m = pl->GetMail(mailId);
+    Mail* m = player->GetMail(mailId);
     if (!m || m->state == MAIL_STATE_DELETED || m->deliver_time > time(NULL))
     {
-        pl->SendMailResult(mailId, MAIL_MONEY_TAKEN, MAIL_ERR_INTERNAL_ERROR);
+        player->SendMailResult(mailId, MAIL_MONEY_TAKEN, MAIL_ERR_INTERNAL_ERROR);
         return;
     }
 
-    pl->SendMailResult(mailId, MAIL_MONEY_TAKEN, MAIL_OK);
+    player->SendMailResult(mailId, MAIL_MONEY_TAKEN, MAIL_OK);
 
-    pl->ModifyMoney(m->money);
+    player->ModifyMoney(m->money);
     m->money = 0;
+  CharacterDatabase.PExecute("UPDATE mail SET money = '0' WHERE id='%u'", mailId);
+  m->checked = m->checked | MAIL_CHECK_MASK_READ;
+    player->m_mailsUpdated = true;
     m->state = MAIL_STATE_CHANGED;
-    pl->m_mailsUpdated = true;
-
     // save money and mail to prevent cheating
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
-    pl->SaveGoldToDB(trans);
-    pl->_SaveMail(trans);
+    player->SaveGoldToDB(trans);
+    player->_SaveMail(trans);
     CharacterDatabase.CommitTransaction(trans);
 }
 
