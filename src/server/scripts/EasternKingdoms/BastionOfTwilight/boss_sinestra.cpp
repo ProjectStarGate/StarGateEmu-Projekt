@@ -1,6 +1,6 @@
 
 /*
- * Copyright (C) 2010-2011 Project StarGate
+ * Copyright (C) 2010-2012 Project StarGate
  */
 
 #include "ScriptPCH.h"

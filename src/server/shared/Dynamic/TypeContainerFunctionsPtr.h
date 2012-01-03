@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Project StarGate
+ * Copyright (C) 2010-2012 Project StarGate
  */
 
 #ifndef TYPECONTAINER_FUNCTIONS_PTR_H

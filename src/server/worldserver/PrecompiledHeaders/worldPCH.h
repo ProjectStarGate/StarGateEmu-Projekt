@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Project StarGate
+ * Copyright (C) 2010-2012 Project StarGate
  */
 
 #include "WorldSocket.h"        // must be first to make ACE happy with ACE includes in it

@@ -1,4 +1,4 @@
-# Copyright (C) 2010-2011 Project StarGate
+# Copyright (C) 2010-2012 Project StarGate
 
 # Need to pass old ${CMAKE_BINARY_DIR} as param because its different at build stage
 add_custom_target(revision.h ALL

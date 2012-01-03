@@ -1,4 +1,4 @@
-# Copyright (C) 2010-2011 Project StarGate
+# Copyright (C) 2010-2012 Project StarGate
 
 if( USE_COREPCH )
   include_directories(${CMAKE_CURRENT_BINARY_DIR})

@@ -1,4 +1,4 @@
-# Copyright (C) 2010-2011 Project StarGate
+# Copyright (C) 2010-2012 Project StarGate
 
 file(GLOB_RECURSE sources_CommandLine CommandLine/*.cpp CommandLine/*.h)
 file(GLOB_RECURSE sources_RemoteAccess RemoteAccess/*.cpp RemoteAccess/*.h)
