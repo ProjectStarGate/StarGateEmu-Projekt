@@ -1695,8 +1695,145 @@ void LFGMgr::TeleportPlayer(Player* plr, bool out, bool fromOpcode /*= false*/)
                     z = at->target_Z;
                     orientation = at->target_Orientation;
                 }
-            }
+				switch (dungeon->ID)
+{
+//world events
+case 285: // The Headless Horseman
+mapid = 189;
+x = 1793.837f;
+y = 1347.15f;
+z = 20.38f;
+orientation = 3.17f;
+break;
 
+case 286: //Frostlord Ahune
+break;
+
+case 287: // Coren Direbrew
+mapid = 230;
+x = 907.299f;
+y = -156.689f;
+z = -47.75f;
+orientation = 2.108f;
+break;
+
+case 288: // The Crown Chemical Co.
+break;
+
+// normal dungeons
+case 14: //gnomeregan
+mapid = 90;
+x = -332.22f;
+y = -2.28f;
+z = -150.86f;
+orientation = 2.77f;
+break;
+
+case 22: // Uldaman
+mapid = 70;
+x = -226.8f;
+y = 49.09f;
+z = -46.03f;
+orientation = 1.39f;
+break;
+
+case 30: // Blackrock Depths - Prison
+break;
+
+case 276: // Blackrock Depths - Upper City
+mapid = 230;
+x = 458.32f;
+y = 26.52f;
+z = -70.67f;
+orientation = 4.95f;
+break;
+
+case 163: // Scarlet Monastery - Armory
+mapid = 189;
+x = 1610.83f;
+y = -323.433f;
+z = 18.6738f;
+orientation = 6.28022f;
+break;
+
+case 164: // Scarlet Monastery - Cathedral
+mapid = 189;
+x = 855.683f;
+y = 1321.5f;
+z = 18.6709f;
+orientation = 0.001747f;
+break;
+
+case 165: // Scarlet Monastery - Library
+mapid = 189;
+x = 255.346f;
+y = -209.09f;
+z = 18.6773f;
+orientation = 6.26656f;
+break;
+
+case 216: // Gundrak
+break;
+case 217: // Gundrak (Heroic)
+mapid = 604;
+x = 1894.58f;
+y = 652.713f;
+z = 176.666f;
+orientation = 4.078f;
+break;
+case 302: // Throne Of The Tides
+mapid = 643;
+x = 624.44f;
+y = 807.108f;
+z = 246.295f;
+orientation = 6.26158f;
+break;
+case 303: // Blackrock Caverns
+mapid = 645;
+x = 211.15f;
+y = 1131.12f;
+z = 205.8f;
+orientation = 4.6767f;
+break;
+case 304: // Grim Batol
+mapid = 670;
+x = 626.595f;
+y = 180.003f;
+z = 272.097f;
+orientation = 4.9288f;
+break;
+case 305: // Halls Of Origination
+mapid = 644;
+x = 954.217f;
+y = 461.686f;
+z = 51.9705f;
+orientation = 1.55269f;
+break;
+case 307: // The Stone Core
+mapid = 725;
+x = 827.012f;
+y = 985.966f;
+z = 317.375f;
+orientation = 0.006879;
+break;
+case 311: // The Vortex Pinnacle
+mapid = 657;
+x = 339.959f;
+y = 12.9507f;
+z = 626.98f;
+orientation = 3.95129f;
+break;
+case 312: // The Lost City Of The Tol'Vir
+mapid = 755;
+x = 10701.4f;
+y = 1312.92f;
+z = 18.5184f;
+orientation = 3.41487f;
+break;
+default:
+break;
+            }
+			}
             if (error == LFG_TELEPORTERROR_OK)
             {
                 if (!plr->GetMap()->IsDungeon() && !plr->GetMap()->IsRaid())
