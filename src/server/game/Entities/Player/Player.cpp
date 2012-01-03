@@ -2784,61 +2784,70 @@ void Player::SendLogXPGain(uint32 GivenXP, Unit* victim, uint32 BonusXP, bool re
 
 void Player::GiveXP(uint32 xp, Unit *victim, float group_rate)
 {
-    if (xp < 1)
-        return;
+   if (xp < 1)
+                return;
 
-    if (!isAlive())
-        return;
+        if (!isAlive())
+                return;
 
-    if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_NO_XP_GAIN))
-        return;
+        if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_NO_XP_GAIN))
+                return;
 
-    if (victim && victim->GetTypeId() == TYPEID_UNIT && !victim->ToCreature()->hasLootRecipient())
-        return;
+        if (victim && victim->GetTypeId() == TYPEID_UNIT
+                        && !victim->ToCreature()->hasLootRecipient())
+                return;
 
-    uint8 level = getLevel();
+        uint8 level = getLevel();
 
-    sScriptMgr->OnGivePlayerXP(this, xp, victim);
+        sScriptMgr->OnGivePlayerXP(this, xp, victim);
 
-    // Favored experience increase START
-    uint32 zone = GetZoneId();
-    float favored_exp_mult = 0;
-    if ((HasAura(32096) || HasAura(32098)) && (zone == 3483 || zone == 3562 || zone == 3836 || zone == 3713 || zone == 3714))
-        favored_exp_mult = 0.05f; // Thrallmar's Favor and Honor Hold's Favor
-    xp = uint32(xp * (1 + favored_exp_mult));
-    // Favored experience increase END
+        // Favored experience increase START
+        uint32 zone = GetZoneId();
+        float favored_exp_mult = 0;
+        //Brainstorm. Use a hackway. Need imlement into AuraSaleForguild. //wlasser
+        float favored_exp_guild_low =0;
+        float favored_exp_guild_high =0;
+        if (HasAura(78631))
+            favored_exp_guild_low = 0.05f;
+        if (HasAura(78632))
+			favored_exp_guild_high = 0.1f;
+        if ((HasAura(32096) || HasAura(32098))
+                        && (zone == 3483 || zone == 3562 || zone == 3836 || zone == 3713
+                                        || zone == 3714))
+                favored_exp_mult = 0.05f; // Thrallmar's Favor and Honor Hold's Favor
+        xp = uint32(xp * (1 + favored_exp_mult + favored_exp_guild_low + favored_exp_guild_high));
+        // Favored experience increase END
 
-    // XP to money conversion processed in Player::RewardQuest
-    if (level >= sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
-        return;
+        // XP to money conversion processed in Player::RewardQuest
+        if (level >= sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+                return;
 
-    uint32 bonus_xp = 0;
-    bool recruitAFriend = GetsRecruitAFriendBonus(true);
+        uint32 bonus_xp = 0;
+        bool recruitAFriend = GetsRecruitAFriendBonus(true);
 
-    // RaF does NOT stack with rested experience
-    if (recruitAFriend)
-        bonus_xp = 2 * xp; // xp + bonus_xp must add up to 3 * xp for RaF; calculation for quests done client-side
-    else
-        bonus_xp = victim ? GetXPRestBonus(xp) : 0; // XP resting bonus
+        // RaF does NOT stack with rested experience
+        if (recruitAFriend)
+                bonus_xp = 2 * xp; // xp + bonus_xp must add up to 3 * xp for RaF; calculation for quests done client-side
+        else
+                bonus_xp = victim ? GetXPRestBonus(xp) : 0; // XP resting bonus
 
-    SendLogXPGain(xp, victim, bonus_xp, recruitAFriend, group_rate);
+        SendLogXPGain(xp, victim, bonus_xp, recruitAFriend, group_rate);
+        uint32 curXP = GetUInt32Value(PLAYER_XP);
+        uint32 nextLvlXP = GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
+        uint32 newXP = curXP + xp + bonus_xp;
 
-    uint32 curXP = GetUInt32Value(PLAYER_XP);
-    uint32 nextLvlXP = GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
-    uint32 newXP = curXP + xp + bonus_xp;
+        while (newXP >= nextLvlXP
+                        && level < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL)) {
+                newXP -= nextLvlXP;
 
-    while (newXP >= nextLvlXP && level < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
-    {
-        newXP -= nextLvlXP;
+                if (level < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+                        GiveLevel(level + 1);
 
-        if (level < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
-            GiveLevel(level + 1);
+                level = getLevel();
+                nextLvlXP = GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
+        }
 
-        level = getLevel();
-        nextLvlXP = GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
-    }
-
-    SetUInt32Value(PLAYER_XP, newXP);
+		SetUInt32Value(PLAYER_XP, newXP);
 }
 
 // Update player to next level
@@ -6912,19 +6921,26 @@ void Player::RewardReputation(Unit *pVictim, float rate)
     uint32 zone = GetZoneId();
     uint32 team = GetTeam();
     float favored_rep_mult = 0;
-
+	float favored_rep_guild = 0;
     if ((HasAura(32096) || HasAura(32098)) && (zone == 3483 || zone == 3562 || zone == 3836 || zone == 3713 || zone == 3714)) favored_rep_mult = 0.25; // Thrallmar's Favor and Honor Hold's Favor
     else if (HasAura(30754) && (Rep->repfaction1 == 609 || Rep->repfaction2 == 609) && !ChampioningFaction)                   favored_rep_mult = 0.25; // Cenarion Favor
 
     if (favored_rep_mult > 0) favored_rep_mult *= 2; // Multiplied by 2 because the reputation is divided by 2 for some reason (See "donerep1 / 2" and "donerep2 / 2") -- if you know why this is done, please update/explain :)
     // Favored reputation increase END
 
+	if (HasAura(78634))
+                favored_rep_guild = 0.05f;
+        else if (HasAura(78635))
+                favored_rep_guild = 0.1f;
+        if (favored_rep_guild > 0)
+                favored_rep_guild *= 2;
+
     bool recruitAFriend = GetsRecruitAFriendBonus(false);
 
     if (Rep->repfaction1 && (!Rep->team_dependent || team == ALLIANCE))
     {
         int32 donerep1 = CalculateReputationGain(pVictim->getLevel(), Rep->repvalue1, ChampioningFaction ? ChampioningFaction : Rep->repfaction1, false);
-        donerep1 = int32(donerep1*(rate + favored_rep_mult));
+        donerep1 = int32(donerep1 * (rate + favored_rep_mult + favored_rep_guild));
 
         if (recruitAFriend)
             donerep1 = int32(donerep1 * (1 + sWorld->getRate(RATE_REPUTATION_RECRUIT_A_FRIEND_BONUS)));
@@ -14158,6 +14174,142 @@ void Player::SendNewItem(Item *item, uint32 count, bool received, bool created, 
         GetGroup()->BroadcastPacket(&data, true);
     else
         GetSession()->SendPacket(&data);
+}
+
+void Player::RewardGuildReputation(float RewRepValue, Creature* cr) // Creature is optional to get the guild repu from creatures..
+{
+    Group* pGroup = GetGroup();
+
+    if (!pGroup)
+        return;
+
+    Player* MemberofGuild[40]; // There is biggest group more than raid so it is 40.
+    uint32 GuildMembers[40];
+    uint32 GuildIds[40];
+    uint32 HighOne = 0;
+    uint32 Count[2];
+    uint32 AllPlayers = 0;
+
+    for (int ii = 0; ii < 40; ++ii)
+        GuildIds[ii] = 0;
+    Count[0] = 0;
+
+    for (int i = 0; i < 3; ++i)
+    {
+        for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
+        {
+            Player *member = itr->getSource();
+
+           if (!member || !member->GetSession())
+                continue;
+
+            if (i == 0)
+            {
+                if (member->GetGuildId() != 0)
+                {
+                    MemberofGuild[Count[0]] = member;
+                    ++Count[0];
+                }
+                ++AllPlayers;
+            }
+            else if (i == 1)
+            {
+                Count[1] = -1;
+                for (int ii = 0; ii < signed(Count[0]); ++ii)
+                {
+                    ++Count[1];
+
+                    bool Continue = false;
+
+                    for (int exist = 0; exist < 40; ++exist)
+                    {
+                        if (GuildIds[exist] == MemberofGuild[ii]->GetGuildId())
+                            Continue = true;
+                    }
+
+                    if (Continue == true)
+                        --Count[1];
+                    else
+                    {
+                        for (int iii = 0; iii < signed(Count[0]); ++iii)
+                        {
+                            if (ii != iii)
+                                if (MemberofGuild[ii]->GetGuildId() == MemberofGuild[iii]->GetGuildId())
+                                {
+                                    ++GuildMembers[Count[1]];
+                                    GuildIds[Count[1]] = MemberofGuild[ii]->GetGuildId();
+                                }
+                        }
+
+                        for (int iii = 0; iii < 40; ++iii)
+                        {
+                            bool Low = false;
+                            if (GuildMembers[Count[1]] < GuildMembers[iii])
+                                Low = true;
+                            if (Low == false)
+                                HighOne = Count[1];        
+						}
+                    }
+                }
+            }
+            else if (i == 2)
+            {
+                bool CanContinue = true;
+                if (GuildMembers[HighOne] < int((AllPlayers*75)/100)) // 75% of the party must from the same guild
+                    CanContinue = false;
+
+                if (CanContinue == true)
+                {
+                    float newrewrepvalue = 0;
+
+                    bool NoCreature = true;
+                    if (cr != NULL)
+                    {
+                        if (member->IsWithinDistInMap(cr->ToCreature(), sWorld->getFloatConfig(CONFIG_GROUP_XP_DISTANCE), false))
+                            NoCreature = true;
+                        else
+                            NoCreature = false;
+                    }
+
+                    if (NoCreature == true && member->GetGuildId() == GuildIds[HighOne])
+                    {
+                        uint32 newrewrepvalue = 0;
+                        if (member->HasAura(20599)) // Diplomacy(Racial of humans)
+                            newrewrepvalue += RewRepValue+(RewRepValue/10); // +%10
+                        if (member->HasAura(78634)) // Mr. Popularity - "... increased by 5%."
+                            newrewrepvalue += RewRepValue+(RewRepValue/20); // +%5
+                        if (member->HasAura(78635)) // Mr. Popularity - "... increased by 10%."
+                            newrewrepvalue += RewRepValue+(RewRepValue/10); // +%10
+
+                        if (Item *pItem = member->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_TABARD))
+                            switch (pItem->GetEntry()) // You can wear just one tabard, that's why it is "switch".
+                            { 
+							case 69209: // Illustrious Guild Tabard - "... gains are increased by 50%."
+                                newrewrepvalue += RewRepValue+(RewRepValue/2);
+                                break;
+                            case 69210: // Renowned Guild Tabard - "... gains are increased by 100%."
+                                newrewrepvalue += RewRepValue*2;
+                                break;
+                            }
+                        // Rounding
+                        if (newrewrepvalue > int(newrewrepvalue)+0.5 || newrewrepvalue == int(newrewrepvalue)+0.5)
+                            newrewrepvalue = int(newrewrepvalue)+1;
+                        else
+                            newrewrepvalue = int(newrewrepvalue);
+
+                        if (Item *pItem = member->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_TABARD)) // If the player equipped the tabard
+                            if (pItem->GetEntry() == 5976 || pItem->GetEntry() == 69209 || pItem->GetEntry() == 69210)
+						{
+                                member->SetReputation(1168, newrewrepvalue);
+								SQLTransaction trans = CharacterDatabase.BeginTransaction();
+                                m_reputationMgr.SaveToDB(trans);
+                                CharacterDatabase.CommitTransaction(trans);
+						}
+                    }
+                }
+            }
+       }
+    }
 }
 
 /*********************************************************/

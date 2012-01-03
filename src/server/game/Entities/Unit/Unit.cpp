@@ -9624,7 +9624,7 @@ bool Unit::Attack(Unit *victim, bool meleeAttack)
     }
     else
     {
-        if (victim->ToCreature()->IsInEvadeMode())
+        if (!victim->ToCreature() || victim->ToCreature()->IsInEvadeMode())
             return false;
     }
 
@@ -10657,6 +10657,8 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                     // Glyph of Ice Lance
                     if (owner->HasAura(56377) && pVictim->getLevel() > owner->getLevel())
                         DoneTotalMod *= 1.05f;
+					// Damages doubled against frozen targets. 
+			            DoneTotalMod *= 2.0f; 
                 }
             }
 

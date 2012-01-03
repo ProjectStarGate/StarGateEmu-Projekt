@@ -13,6 +13,7 @@ set(scripts_STAT_SRCS
   Spells/spell_mage.cpp
   Spells/spell_paladin.cpp
   Spells/spell_item.cpp
+  Spells/spell_guild.cpp
 )
 
 message("  -> Prepared: Spells")

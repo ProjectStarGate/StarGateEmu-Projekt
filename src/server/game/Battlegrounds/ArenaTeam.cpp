@@ -9,6 +9,7 @@
 #include "World.h"
 #include "Group.h"
 
+
 ArenaTeam::ArenaTeam()
 {
     TeamId            = 0;
@@ -668,11 +669,13 @@ int32 ArenaTeam::WonAgainst(uint32 againstRating)
     if (Player* member = ObjectAccessor::FindPlayer(itr->Guid))
     member->RewardGuildReputation(62); // Normal Value
 
+
     // Update number of wins per season and week
     Stats.WeekWins += 1;
     Stats.SeasonWins += 1;
 
     // Return the rating change, used to display it on the results screen
+
     return mod;
 }
 
@@ -791,6 +794,7 @@ void ArenaTeam::UpdateArenaPointsHelper(std::map<uint32, uint32>& playerPoints)
             // Check if there is already more points
             if (plr_itr->second < pointsToAdd)
                 playerPoints[GUID_LOPART(itr->Guid)] = pointsToAdd;
+
         }
         else
             playerPoints[GUID_LOPART(itr->Guid)] = pointsToAdd;
@@ -874,6 +878,9 @@ ArenaTeamMember* ArenaTeam::GetMember(const uint64& guid)
     for (MemberList::iterator itr = Members.begin(); itr != Members.end(); ++itr)
         if (itr->Guid == guid)
             return &(*itr);
+
+
+		
 
     return NULL;
 }

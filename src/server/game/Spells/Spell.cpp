@@ -2620,6 +2620,13 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                 }
                 break;
             }
+
+			case 83968:  //Massenwiederbelebung
+                 {
+                    m_caster->CastSpell(unitTarget,95223,true);
+                    break;
+                 }
+
             case SPELL_TARGETS_GO:
             {
                 ConditionList conditions = sConditionMgr->GetConditionsForNotGroupedEntry(CONDITION_SOURCE_TYPE_SPELL_SCRIPT_TARGET, m_spellInfo->Id);

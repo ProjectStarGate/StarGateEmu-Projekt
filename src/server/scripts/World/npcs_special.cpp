@@ -2977,6 +2977,28 @@ public:
     }
 };
 
+class npc_schlachtzugskessel : public CreatureScript
+
+{
+public:
+    npc_schlachtzugskessel() : CreatureScript("npc_schlachtzugskessel") { }
+
+    struct npc_schlachtzugskesselAI : public PassiveAI
+    {
+        npc_schlachtzugskesselAI(Creature* c) : PassiveAI(c) {}
+
+        void Reset()
+        {
+            DoCast(me, 92612, false); // Spell Trank Schlachtzugskessel
+        }
+    };
+
+    CreatureAI* GetAI(Creature* creature) const
+    {
+        return new npc_schlachtzugskesselAI(creature);
+    }
+};
+
 class npc_ring_of_frost : public CreatureScript
 {
     public:
@@ -3109,4 +3131,5 @@ void AddSC_npcs_special()
   //new npc_guardian_of_ancient_kings;
 	new npc_lightwell;
 	new npc_ring_of_frost;
+	new npc_schlachtzugskessel;
 }

@@ -1830,6 +1830,11 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     m_caster->CastSpell(unitTarget,93983,true);
                     break;
                  }
+				 case 83968:  //Massenwiederbelebung
+                 {
+                    m_caster->CastSpell(unitTarget,95223,true);
+                    break;
+                 }
                  case 1126: // Mark of the Wild
                  {
                      if (m_caster->GetTypeId() == TYPEID_PLAYER)
