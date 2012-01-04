@@ -23,6 +23,7 @@ void AddSC_hunter_spell_scripts();
 void AddSC_mage_spell_scripts();
 void AddSC_paladin_spell_scripts();
 void AddSC_priest_spell_scripts();
+void AddSC_Guild_spell_scripts();
 void AddSC_rogue_spell_scripts();
 void AddSC_shaman_spell_scripts();
 void AddSC_warlock_spell_scripts();
@@ -583,8 +584,11 @@ void AddSC_lost_city_of_the_tolvir();           //The Lost City of the Tol'vir
 void AddSC_instance_lost_city_of_the_tolvir();
 void AddSC_boss_lockmaw();
 void AddSC_boss_high_prophet_barim();
-void AddSC_instance_the_vortex_pinnacle();      //The Vortex Pinnacle
-void AddSC_boss_altairus();
+void AddSC_boss_altairus();                  //Vortex Pinnacle
+void AddSC_boss_assad();
+void AddSC_boss_grand_vizier_ertan();
+void AddSC_vortex_pinnacle();
+void AddSC_instance_vortex_pinnacle();
 void AddSC_instance_grim_batol();               //Grim Batol
 void AddSC_boss_general_umbriss();
 void AddSC_boss_drahga();
@@ -594,7 +598,7 @@ void AddSC_instance_throne_of_the_tides();      //Throne of the Tides
 void AddSC_boss_commander_ulthok();
 void AddSC_boss_erunak_stonespeaker();
 void AddSC_boss_lady_nazjar();
-//void AddSC_neptulon();
+void AddSC_neptulon();
 void AddSC_instance_blackrock_caverns();        //Blackrock Caverns
 void AddSC_boss_corla();
 void AddSC_boss_romogg_bonecrusher();
@@ -675,6 +679,7 @@ void AddSpellScripts()
     AddSC_mage_spell_scripts();
     AddSC_paladin_spell_scripts();
     AddSC_priest_spell_scripts();
+	AddSC_Guild_spell_scripts();
     AddSC_rogue_spell_scripts();
     AddSC_shaman_spell_scripts();
     AddSC_warlock_spell_scripts();
@@ -1255,15 +1260,18 @@ void AddNorthrendScripts()
     AddSC_instance_lost_city_of_the_tolvir();
     AddSC_boss_lockmaw();
     AddSC_boss_high_prophet_barim();
-    AddSC_instance_the_vortex_pinnacle();      //The Vortex Pinnacle
-    AddSC_boss_altairus();
+	AddSC_boss_altairus();                  //Vortex Pinnacle
+	AddSC_boss_assad();
+	AddSC_boss_grand_vizier_ertan();
+	AddSC_vortex_pinnacle();
+	AddSC_instance_vortex_pinnacle();
     AddSC_instance_grim_batol();               //Grim Batol
 	AddSC_boss_general_umbriss();
 	AddSC_boss_drahga();
 	AddSC_boss_erudax();
 	AddSC_boss_throngus();
     AddSC_instance_throne_of_the_tides();      //Throne of the Tides
-	//AddSC_neptulon();
+	AddSC_neptulon();
 	AddSC_boss_erunak_stonespeaker();
 	AddSC_boss_commander_ulthok();
 	AddSC_boss_lady_nazjar();

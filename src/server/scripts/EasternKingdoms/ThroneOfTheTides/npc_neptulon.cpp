@@ -1,3 +1,7 @@
+/*
+* Completed%: 32%
+*/
+
 #include "ScriptPCH.h"
 #include "throne_of_the_tides.h"
 

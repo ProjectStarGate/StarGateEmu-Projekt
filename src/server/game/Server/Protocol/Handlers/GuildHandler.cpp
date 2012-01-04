@@ -132,12 +132,13 @@ void WorldSession::HandleGuildInfoOpcode(WorldPacket& /*recvPacket*/)
 }
 
 // CATA Status: Done
-void WorldSession::HandleGuildRosterOpcode(WorldPacket& /*recvPacket*/)
-{
-    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_ROSTER");
+void WorldSession::HandleGuildRosterOpcode(WorldPacket& /*recvPacket*/) {
+
+  sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_ROSTER");
 
     if (Guild* pGuild = _GetPlayerGuild(this))
-        pGuild->HandleRoster(this);
+    pGuild->HandleRoster(this);
+
 }
 
 // Cata Status: Done

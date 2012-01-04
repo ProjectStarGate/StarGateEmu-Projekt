@@ -83,10 +83,12 @@ set(scripts_STAT_SRCS
   Kalimdor/TempleOfAhnQiraj/boss_skeram.cpp
   Kalimdor/TempleOfAhnQiraj/boss_ouro.cpp
   Kalimdor/TempleOfAhnQiraj/boss_bug_trio.cpp
-  Kalimdor/TheVortexPinnacle/the_vortex_pinnacle.cpp
-  Kalimdor/TheVortexPinnacle/the_vortex_pinnacle.h
   Kalimdor/TheVortexPinnacle/boss_altairus.cpp
-  Kalimdor/TheVortexPinnacle/instance_the_vortex_pinnacle.cpp
+  Kalimdor/TheVortexPinnacle/boss_assad.cpp
+  Kalimdor/TheVortexPinnacle/boss_grand_vizier_ertan.cpp
+  Kalimdor/TheVortexPinnacle/instance_vortex_pinnacle.cpp
+  Kalimdor/TheVortexPinnacle/vortex_pinnacle.cpp
+  Kalimdor/TheVortexPinnacle/vortex_pinnacle.h
   Kalimdor/darkshore.cpp
   Kalimdor/RuinsOfAhnQiraj/boss_buru.cpp
   Kalimdor/RuinsOfAhnQiraj/instance_ruins_of_ahnqiraj.cpp

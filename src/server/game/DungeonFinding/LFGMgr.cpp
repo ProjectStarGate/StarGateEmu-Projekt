@@ -1814,7 +1814,7 @@ mapid = 725;
 x = 827.012f;
 y = 985.966f;
 z = 317.375f;
-orientation = 0.006879;
+orientation = 0.006879f;
 break;
 case 311: // The Vortex Pinnacle
 mapid = 657;

@@ -1054,6 +1054,41 @@ class TradeData
 
         uint64     m_items[TRADE_SLOT_COUNT];               // traded itmes from m_player side including non-traded slot
 };
+class KillRewarder
+{
+
+public:
+    KillRewarder(Player* killer, Unit* victim, bool isBattleGround);
+
+    void Reward();
+
+private:
+    void _InitXP(Player* player);
+    void _InitGroupData();
+
+    void _RewardHonor(Player* player);
+    void _RewardXP(Player* player, float rate);
+    void _RewardOnKill(Player* player, float rate);
+    void _RewardKillCredit(Player* player);
+    void _RewardPlayer(Player* player, bool isDungeon);
+    void _RewardGroup();
+
+    Player* _killer;
+    Unit* _victim;
+    bool _isBattleGround;
+
+    bool _isPvP;
+
+    Group* _group;
+    float _groupRate;
+    uint8 _maxLevel;
+    Player* _maxNotGrayMember;
+    uint32 _count;
+    uint32 _sumLevel;
+    bool _isFullXP;
+
+    uint32 _xp;
+};
 
 class Player : public Unit, public GridObject<Player>
 {
@@ -1471,6 +1506,7 @@ class Player : public Unit, public GridObject<Player>
         void ItemRemovedQuestCheck(uint32 entry, uint32 count);
         void KilledMonster(CreatureInfo const* cInfo, uint64 guid);
         void KilledMonsterCredit(uint32 entry, uint64 guid);
+		void KilledPlayerCredit();
         void CastedCreatureOrGO(uint32 entry, uint64 guid, uint32 spell_id);
         void TalkedToCreature(uint32 entry, uint64 guid);
         void MoneyChanged(uint32 value);
@@ -1493,7 +1529,8 @@ class Player : public Unit, public GridObject<Player>
         void SendQuestConfirmAccept(Quest const* pQuest, Player* pReceiver);
         void SendPushToPartyResponse(Player *pPlayer, uint32 msg);
         void SendQuestUpdateAddItem(Quest const* pQuest, uint32 item_idx, uint16 count);
-        void SendQuestUpdateAddCreatureOrGo(Quest const* pQuest, uint64 guid, uint32 creatureOrGO_idx, uint16 old_count, uint16 add_count);
+	    void SendQuestUpdateAddCreatureOrGo(Quest const* pQuest, uint64 guid, uint32 creatureOrGO_idx, uint16 old_count, uint16 add_count);
+	    void SendQuestUpdateAddPlayer(Quest const* quest, uint16 old_count, uint16 add_count);
 
         uint64 GetDivider() { return m_divider; }
         void SetDivider(uint64 guid) { m_divider = guid; }
@@ -2032,7 +2069,7 @@ class Player : public Unit, public GridObject<Player>
 
         bool IsAtGroupRewardDistance(WorldObject const* pRewardSource) const;
         bool IsAtRecruitAFriendDistance(WorldObject const* pOther) const;
-        bool RewardPlayerAndGroupAtKill(Unit* pVictim);
+        void RewardPlayerAndGroupAtKill(Unit* victim, bool isBattleGround);
         void RewardPlayerAndGroupAtEvent(uint32 creature_id, WorldObject* pRewardSource);
         bool isHonorOrXPTarget(Unit* pVictim);
 
@@ -2042,7 +2079,7 @@ class Player : public Unit, public GridObject<Player>
         ReputationMgr&       GetReputationMgr()       { return m_reputationMgr; }
         ReputationMgr const& GetReputationMgr() const { return m_reputationMgr; }
         ReputationRank GetReputationRank(uint32 faction_id) const;
-        void RewardReputation(Unit *pVictim, float rate);
+        void RewardOnKill(Unit *victim, float rate);
         void RewardReputation(Quest const *pQuest);
 
         void UpdateSkillsForLevel();
@@ -2553,14 +2590,19 @@ class Player : public Unit, public GridObject<Player>
         void SetTitle(CharTitlesEntry const* title, bool lost = false);
 
         //bool isActiveObject() const { return true; }
-        bool canSeeSpellClickOn(Creature const* creature) const;
+		bool canSeeSpellClickOn(Creature const* creature) const;
 
-        uint32 GetChampioningFaction() const { return m_ChampioningFaction; }
-        void SetChampioningFaction(uint32 faction) { m_ChampioningFaction = faction; }
-        Spell * m_spellModTakingSpell;
+		uint32 GetChampioningFaction() const {return m_ChampioningFaction;}
+        uint32 GetChampioningFactionDungeonLevel() const { return m_ChampioningFactionDungeonLevel; }
+	    void SetChampioningFaction(uint32 faction, uint32 dungeonLevel = 0)
+		   {
+        m_ChampioningFaction = faction;
+        m_ChampioningFactionDungeonLevel = dungeonLevel;
+		  }
+		Spell * m_spellModTakingSpell;
 
-        float GetAverageItemLevel();
-        bool isDebugAreaTriggers;
+		float GetAverageItemLevel();
+		bool isDebugAreaTriggers;
 
     protected:
         uint32 m_GuildMoneyModifier;
@@ -2893,6 +2935,7 @@ class Player : public Unit, public GridObject<Player>
         std::map<uint32, uint32> m_globalCooldowns; // whole start recovery category stored in one
 
         uint32 m_ChampioningFaction;
+		uint32 m_ChampioningFactionDungeonLevel;
 
         uint32 m_timeSyncCounter;
         uint32 m_timeSyncTimer;

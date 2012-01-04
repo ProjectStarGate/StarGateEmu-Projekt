@@ -178,6 +178,7 @@ class Group
         void   UpdateLooterGuid(WorldObject* pLootedObject, bool ifneed = false);
         void   SetLootThreshold(ItemQualities threshold);
         void   Disband(bool hideDestroy=false);
+		void SendGuildGroupStateUpdate(bool guild);
 
         // Dungeon Finder
         void SetLfgRoles(uint64& guid, const uint8 roles);
@@ -197,6 +198,7 @@ class Group
         LootMethod GetLootMethod() const;
         const uint64& GetLooterGuid() const;
         ItemQualities GetLootThreshold() const;
+		bool IsGuildGroup(uint32 guildId, bool AllInSameMap = false, bool AllInSameInstanceId = false);
 
         // member manipulation methods
         bool IsMember(const uint64& guid) const;

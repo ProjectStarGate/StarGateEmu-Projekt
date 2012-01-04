@@ -237,13 +237,13 @@ EasternKingdoms/BastionOfTwilight/boss_chogall.cpp
   EasternKingdoms/GrimBatol/instance_grim_batol.cpp 
   EasternKingdoms/ThroneOfTheTides/throne_of_the_tides.h
   EasternKingdoms/ThroneOfTheTides/boss_ulthok.cpp
-  EasternKingdoms/ThroneOfTheTides/boss_erunak_stonespeaker.cpp
+ EasternKingdoms/ThroneOfTheTides/boss_erunak_stonespeaker.cpp
   EasternKingdoms/ThroneOfTheTides/boss_dame_nazjar.cpp
-  EasternKingdoms/ThroneOfTheTides/boss_torve_esprit_ghursha.cpp
-  EasternKingdoms/ThroneOfTheTides/boss_ozumat.cpp
-  EasternKingdoms/ThroneOfTheTides/instance_throne_of_the_tides.cpp
+EasternKingdoms/ThroneOfTheTides/boss_torve_esprit_ghursha.cpp
+EasternKingdoms/ThroneOfTheTides/instance_throne_of_the_tides.cpp
+EasternKingdoms/ThroneOfTheTides/npc_neptulon.cpp
   EasternKingdoms/BlackwingDescent/blackwing_descent.cpp
-  EasternKingdoms/BlackwingDescent/instance_blackwing_descent.cpp
+EasternKingdoms/BlackwingDescent/instance_blackwing_descent.cpp
   EasternKingdoms/BlackwingDescent/blackwing_descent.h
   EasternKingdoms/BlackwingDescent/boss_magmaw.cpp
   EasternKingdoms/BlackwingDescent/boss_onyxia2.cpp
