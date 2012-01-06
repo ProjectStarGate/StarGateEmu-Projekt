@@ -42,6 +42,7 @@ BattlegroundAB::~BattlegroundAB()
 {
 }
 
+
 void BattlegroundAB::Update(uint32 diff)
 {
     Battleground::Update(diff);
@@ -600,6 +601,7 @@ void BattlegroundAB::Reset()
     m_ReputationTics = (isBGWeekend) ? BG_AB_ABBGWeekendReputationTicks : BG_AB_NotABBGWeekendReputationTicks;
     m_TeamScores500Disadvantage[BG_TEAM_ALLIANCE] = false;
     m_TeamScores500Disadvantage[BG_TEAM_HORDE]    = false;
+	m_ReputationCapture = (isBGWeekend) ? 45 : 35;
 
     for (uint8 i = 0; i < BG_AB_DYNAMIC_NODES_COUNT; ++i)
     {
@@ -619,8 +621,10 @@ void BattlegroundAB::EndBattleground(uint32 winner)
     //win reward
     if (winner == ALLIANCE)
         RewardHonorToTeam(GetBonusHonorFromKill(1), ALLIANCE);
+		RewardReputationToTeam(1168, m_ReputationCapture, ALLIANCE);
     if (winner == HORDE)
         RewardHonorToTeam(GetBonusHonorFromKill(1), HORDE);
+		RewardReputationToTeam(1168, m_ReputationCapture, HORDE);
     //complete map_end rewards (even if no team wins)
     RewardHonorToTeam(GetBonusHonorFromKill(1), HORDE);
     RewardHonorToTeam(GetBonusHonorFromKill(1), ALLIANCE);

@@ -2267,7 +2267,7 @@ bool Group::IsGuildGroup(uint32 guildId, bool AllInSameMap, bool AllInSameInstan
             }
             
             if (player->GetMap()->IsBattleArena() && !ret)
-                if (count == GetMembersCount())
+               if (count == GetMembersCount())
                     ret = true;
                     
             if (player->GetMap()->IsBattleground() && !ret)

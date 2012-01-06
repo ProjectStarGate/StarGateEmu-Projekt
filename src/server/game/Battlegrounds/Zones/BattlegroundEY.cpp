@@ -281,8 +281,10 @@ void BattlegroundEY::EndBattleground(uint32 winner)
     //win reward
     if (winner == ALLIANCE)
         RewardHonorToTeam(GetBonusHonorFromKill(1), ALLIANCE);
+		RewardReputationToTeam(1168, m_ReputationCapture, ALLIANCE);
     if (winner == HORDE)
         RewardHonorToTeam(GetBonusHonorFromKill(1), HORDE);
+		RewardReputationToTeam(1168, m_ReputationCapture, HORDE);
     //complete map reward
     RewardHonorToTeam(GetBonusHonorFromKill(1), ALLIANCE);
     RewardHonorToTeam(GetBonusHonorFromKill(1), HORDE);
@@ -517,6 +519,7 @@ void BattlegroundEY::Reset()
     m_TowerCapCheckTimer = 0;
     bool isBGWeekend = sBattlegroundMgr->IsBGWeekend(GetTypeID());
     m_HonorTics = (isBGWeekend) ? BG_EY_EYWeekendHonorTicks : BG_EY_NotEYWeekendHonorTicks;
+	m_ReputationCapture = (isBGWeekend) ? 45 : 35;
 
     for (uint8 i = 0; i < EY_POINTS_MAX; ++i)
     {

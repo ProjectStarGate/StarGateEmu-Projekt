@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Battleground.h"
 #include "BattlegroundIC.h"
+#include "BattlegroundMgr.h"
 #include "Language.h"
 #include "WorldPacket.h"
 #include "GameObject.h"
@@ -44,6 +45,12 @@ BattlegroundIC::BattlegroundIC()
 
 BattlegroundIC::~BattlegroundIC()
 {
+}
+
+void BattlegroundIC::Reset()
+{
+	    bool isBGWeekend = sBattlegroundMgr->IsBGWeekend(GetTypeID());
+	    m_ReputationCapture = (isBGWeekend) ? 45 : 35;
 }
 
 void BattlegroundIC::HandlePlayerResurrect(Player* player)
@@ -453,6 +460,11 @@ void BattlegroundIC::HandleKillPlayer(Player* player, Player* killer)
 void BattlegroundIC::EndBattleground(uint32 winner)
 {
     SendMessage2ToAll(LANG_BG_IC_TEAM_WINS, CHAT_MSG_BG_SYSTEM_NEUTRAL, NULL, (winner == ALLIANCE ? LANG_BG_IC_ALLIANCE : LANG_BG_IC_HORDE));
+
+	if (winner == ALLIANCE)
+		RewardReputationToTeam(1168, m_ReputationCapture, ALLIANCE);
+    if (winner == HORDE)
+		RewardReputationToTeam(1168, m_ReputationCapture, HORDE);
 
     Battleground::EndBattleground(winner);
 }

@@ -453,6 +453,7 @@ void BattlegroundAV::EndBattleground(uint32 winner)
         }
         if (rep[i] != 0)
             RewardReputationToTeam((i == 0)?730:729, rep[i], (i == 0)?ALLIANCE:HORDE);
+			RewardReputationToTeam((i == 0)?1168:1168, rep[i], (i == 0)?ALLIANCE:HORDE);
         if (kills[i] != 0)
             RewardHonorToTeam(GetBonusHonor(kills[i]), (i == 0)?ALLIANCE:HORDE);
     }

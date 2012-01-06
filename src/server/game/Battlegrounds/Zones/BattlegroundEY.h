@@ -395,5 +395,6 @@ class BattlegroundEY : public Battleground
 
         int32 m_PointAddingTimer;
         uint32 m_HonorTics;
+		uint32 m_ReputationCapture;
 };
 #endif

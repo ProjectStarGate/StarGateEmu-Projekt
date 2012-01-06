@@ -287,5 +287,6 @@ class BattlegroundAB : public Battleground
         uint32              m_ReputationTics;
         // need for achievements
         bool                m_TeamScores500Disadvantage[BG_TEAMS_COUNT];
+		uint32 m_ReputationCapture;
 };
 #endif

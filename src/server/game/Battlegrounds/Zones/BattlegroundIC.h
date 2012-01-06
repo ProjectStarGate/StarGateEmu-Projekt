@@ -945,5 +945,7 @@ private:
     void HandleContestedNodes(ICNodePoint* nodePoint);
     Transport* CreateTransport(uint32 goEntry, uint32 period);
     void SendTransportInit(Player* player);
+	uint32 m_ReputationCapture;
+	virtual void Reset();
 };
 #endif

@@ -10,6 +10,8 @@
 #include "GameObject.h"
 #include "ObjectMgr.h"
 #include "WorldPacket.h"
+#include "BattlegroundMgr.h"
+#include "World.h"
 
 // Need to check this data before we but in database these achievements may be outdated for 4.0.6 .
 //DELETE FROM `disables` WHERE `sourceType` = 4 AND `entry` in (7625, 6446, 7628);
@@ -47,6 +49,8 @@ void BattlegroundSA::Reset()
         GateStatus[i] = BG_SA_GATE_OK;
     ShipsStarted = false;
     Status = BG_SA_WARMUP;
+	bool isBGWeekend = sBattlegroundMgr->IsBGWeekend(GetTypeID());
+	m_ReputationCapture = (isBGWeekend) ? 45 : 35;
 }
 
 bool BattlegroundSA::SetupBattleground()
@@ -862,8 +866,10 @@ void BattlegroundSA::EndBattleground(uint32 winner)
     //honor reward for winning
     if (winner == ALLIANCE)
         RewardHonorToTeam(GetBonusHonorFromKill(1), ALLIANCE);
-    else if (winner == HORDE)
+		RewardReputationToTeam(1168, m_ReputationCapture, ALLIANCE);
+    if (winner == HORDE)
         RewardHonorToTeam(GetBonusHonorFromKill(1), HORDE);
+		RewardReputationToTeam(1168, m_ReputationCapture, HORDE);
 
     //complete map_end rewards (even if no team wins)
     RewardHonorToTeam(GetBonusHonorFromKill(2), ALLIANCE);

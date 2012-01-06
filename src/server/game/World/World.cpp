@@ -1372,7 +1372,7 @@ void World::SetInitialWorldSettings()
     sObjectMgr->LoadReputationRewardRate();
 
     sLog->outString("Lade Creature_Reputation_OnKill_Data...");
-    sObjectMgr->LoadRewardOnKill();
+    sObjectMgr->LoadReputationOnKill();
 
     sLog->outString( "Lade Reputation_Spillover_Data..." );
     sObjectMgr->LoadReputationSpilloverTemplate();
