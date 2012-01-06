@@ -5932,13 +5932,13 @@ void AuraEffect::HandleModDamagePercentDone(AuraApplication const *aurApp, uint8
         switch (GetBase()->GetUnitOwner()->GetPower(POWER_HOLY_POWER))
         {
             case 0: // 1HP
-                GetBase()->SetDuration(4000);
+                GetBase()->SetDuration(4000, true);
                 break;
             case 1: // 2HP
-                GetBase()->SetDuration(8000);
+                GetBase()->SetDuration(8000, true);
                 break;
             case 2: // 3HP
-                GetBase()->SetDuration(12000);
+                GetBase()->SetDuration(12000, true);
                 break;
         }
     }
@@ -6105,6 +6105,13 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                     if (caster)
                         caster->CastSpell(caster, 13138, true, NULL, this);
                     break;
+					// Sudden Death Cataclysm Proc
+                case 52437:
+                {
+                    if (caster && caster->ToPlayer()->HasSpellCooldown(86346))
+                        caster->ToPlayer()->RemoveSpellCooldown(86346,true);
+                    break;
+                }
     				// Guardian of Ancient Kings - Retribution
                 case 86698:
                 {
