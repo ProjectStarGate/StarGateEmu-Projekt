@@ -4577,6 +4577,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectMiscValue[2] |= 2;
             count++;
             break;
+		case 87426: // Summon Shadowy Apparition
+            spellInfo->EffectBasePoints[0] = 1;
+            count++;
+            break;
         default:
             break;
         }
