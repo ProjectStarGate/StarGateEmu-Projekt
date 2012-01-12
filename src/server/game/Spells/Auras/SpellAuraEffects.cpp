@@ -4732,6 +4732,9 @@ void AuraEffect::HandleModStateImmunityMask(AuraApplication const *aurApp, uint8
         immunity_list.push_back(SPELL_AURA_MOD_PACIFY_SILENCE);
         target->ApplySpellImmune(GetId(), IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, apply);
         target->ApplySpellImmune(GetId(), IMMUNITY_MECHANIC, MECHANIC_SNARE, apply);
+        // Inmunidad a mind control y hex
+        target->ApplySpellImmune(GetId(), IMMUNITY_MECHANIC, MECHANIC_CHARM, apply);
+        target->ApplySpellImmune(GetId(), IMMUNITY_MECHANIC, MECHANIC_POLYMORPH, apply);
     }
 
     if (apply && GetSpellProto()->AttributesEx & SPELL_ATTR1_DISPEL_AURAS_ON_IMMUNITY)
