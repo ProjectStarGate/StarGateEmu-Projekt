@@ -4044,6 +4044,7 @@ void Spell::EffectDistract(SpellEffIndex /*effIndex*/)
         // For players just turn them
         unitTarget->ToPlayer()->SetPosition(unitTarget->GetPositionX(), unitTarget->GetPositionY(), unitTarget->GetPositionZ(), angle, false);
         unitTarget->ToPlayer()->SendTeleportAckPacket();
+		unitTarget->ToPlayer()->SetStandState(0);
     }
     else
     {
