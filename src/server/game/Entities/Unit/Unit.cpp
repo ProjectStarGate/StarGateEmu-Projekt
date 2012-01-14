@@ -8960,7 +8960,7 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                 if (pVictim->HasAura(6788))
                 {
                     uint32 newCooldownDelay = pVictim->GetAura(6788)->GetDuration();
-                    if (newCooldownDelay <= (triggeredByAura->GetSpellProto()->GetSpellEffect(0)->EffectBasePoints)*1000)
+                    if (newCooldownDelay -= (triggeredByAura->GetSpellProto()->GetSpellEffect(0)->EffectBasePoints)*1000)
             newCooldownDelay = 0;
           else
             newCooldownDelay -= ((triggeredByAura->GetSpellProto()->GetSpellEffect(0)->EffectBasePoints)*1000);
