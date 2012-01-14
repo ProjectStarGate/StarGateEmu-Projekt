@@ -6335,7 +6335,7 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
         {
             if (m_spellInfo->Id == 87151)
             {
-                if (m_caster->HasAura(81661)||m_caster->HasAura(81660))
+                if (m_caster->HasAura(81661)|| m_caster->HasAura(87118))
                 {
                     if (Aura* evangelism = m_caster->GetAura(81661))
                     {
